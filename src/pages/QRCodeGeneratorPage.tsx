@@ -7,11 +7,15 @@ import {
   where,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { generateSessionId } from "../business-logic/firestore";
 import { db } from "../config/firebase";
+import { Button } from "../ui/components/Button";
 import QRCode from "../ui/components/QRCode";
 
 export default function QRCodeGeneratorPage() {
+  const navigate = useNavigate();
+
   const [imageUrl, setImageUrl] = useState(null);
   const sessionId = generateSessionId();
   // URL du formulaire d’upload à scanner (à héberger)
@@ -57,6 +61,10 @@ export default function QRCodeGeneratorPage() {
       ) : (
         <p className="text-gray-500">En attente d'une image...</p>
       )}
+
+      <Button variant="outline" onClick={() => navigate("/customisation")}>
+        Personaliser un produit
+      </Button>
     </div>
   );
 }
