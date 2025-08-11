@@ -1,6 +1,12 @@
 import Konva from "konva"; // important pour les types
 import { useEffect, useRef, useState } from "react";
-import { Image as KonvaImage, Layer, Stage, Transformer } from "react-konva";
+import {
+  Group,
+  Image as KonvaImage,
+  Layer,
+  Stage,
+  Transformer,
+} from "react-konva";
 import useImage from "use-image";
 import CilaosImage from "../assets/cilaos.jpg";
 import MousePadImage from "../assets/mouse-pad.png";
@@ -51,6 +57,25 @@ function CustomisationPage() {
     setShowGuide(false);
   }
 
+  function clipClientImage(ctx: any) {
+    // Ici, on définit un rectangle aux coins arrondis
+    const radius = 20; // arrondi des coins
+    const width = 500;
+    const height = 300;
+
+    ctx.beginPath();
+    ctx.moveTo(radius, 0);
+    ctx.lineTo(width - radius, 0);
+    ctx.quadraticCurveTo(width, 0, width, radius);
+    ctx.lineTo(width, height - radius);
+    ctx.quadraticCurveTo(width, height, width - radius, height);
+    ctx.lineTo(radius, height);
+    ctx.quadraticCurveTo(0, height, 0, height - radius);
+    ctx.lineTo(0, radius);
+    ctx.quadraticCurveTo(0, 0, radius, 0);
+    ctx.closePath();
+  }
+
   useEffect(() => {
     if (isSelected && transformerRef.current && imageRef.current) {
       transformerRef.current.nodes([imageRef.current]);
@@ -79,40 +104,54 @@ function CustomisationPage() {
           height={300}
         />
 
-        {/* Image du client */}
-        <KonvaImage
-          image={clientImage}
-          x={150}
-          y={80}
-          width={200}
-          height={140}
-          draggable
-          ref={imageRef}
-          onClick={() => setIsSelected(true)}
-          onTap={() => setIsSelected(true)}
-          onTransform={(e) => onClientImageTransform(e)}
-          onTransformEnd={(e) => onClientImageTransformEnd(e)}
-        />
-
-        {/* Transformer */}
-        {isSelected && (
-          <Transformer
-            ref={transformerRef}
-            rotateEnabled={true}
-            enabledAnchors={[
-              "top-left",
-              "top-right",
-              "bottom-left",
-              "bottom-right",
-            ]}
-            boundBoxFunc={(oldBox, newBox) => {
-              if (newBox.width < 50 || newBox.height < 50) {
-                return oldBox;
-              }
-              return newBox;
+        <Group
+          clipFunc={(ctx: any) => clipClientImage(ctx)}
+          hitFunc={(ctx: any) => clipClientImage(ctx)}
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) {
+              setIsSelected(false);
+            }
+          }}
+        >
+          {/* Image du client */}
+          <KonvaImage
+            image={clientImage}
+            x={150}
+            y={80}
+            width={200}
+            height={140}
+            draggable
+            ref={imageRef}
+            onClick={() => setIsSelected(true)}
+            onTap={() => setIsSelected(true)}
+            onTransform={(e) => onClientImageTransform(e)}
+            onTransformEnd={(e) => onClientImageTransformEnd(e)}
+            onMouseDown={(e) => {
+              e.cancelBubble = true;
+              setIsSelected(true);
             }}
           />
-        )}
+
+          {/* Transformer */}
+          {isSelected && (
+            <Transformer
+              ref={transformerRef}
+              rotateEnabled={true}
+              enabledAnchors={[
+                "top-left",
+                "top-right",
+                "bottom-left",
+                "bottom-right",
+              ]}
+              boundBoxFunc={(oldBox, newBox) => {
+                if (newBox.width < 50 || newBox.height < 50) {
+                  return oldBox;
+                }
+                return newBox;
+              }}
+            />
+          )}
+        </Group>
 
         {/* Guide visuel */}
         {showGuide && guideOrientation === "horizontal" && (
