@@ -19,16 +19,16 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const getVariantClasses = (variant: ButtonVariant): string => {
   const variants = {
     primary:
-      "bg-blue-600 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
+      "bg-red-9 text-white hover:bg-red-7 focus:ring-2 focus:ring-red-7 focus:ring-offset-2",
     secondary:
-      "bg-gray-600 text-white hover:bg-gray-700 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2",
+      "bg-gray-7 text-white hover:bg-gray-6 focus:ring-2 focus:ring-gray-5 focus:ring-offset-2",
     accent:
-      "bg-orange-600 text-white hover:bg-orange-700 focus:ring-2 focus:ring-orange-500 focus:ring-offset-2",
+      "bg-yellow-600 text-white hover:bg-yellow-700 focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2",
     outline:
-      "border-2 border-blue-600 text-blue-600 hover:bg-blue-50 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
+      "border-2 border-gray-9 text-gray-9 hover:bg-gray-3 focus:ring-2 focus:ring-gray-7 focus:ring-offset-2",
     ghost:
-      "text-blue-600 hover:bg-blue-50 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
-    link: "text-blue-600 underline-offset-4 hover:underline focus:ring-2 focus:ring-blue-500 focus:ring-offset-2",
+      "text-gray-9 hover:bg-gray-3 focus:ring-2 focus:ring-gray-7 focus:ring-offset-2",
+    link: "text-red-9 underline-offset-4 hover:underline focus:ring-2 focus:ring-red-7 focus:ring-offset-2",
   };
   return variants[variant];
 };
