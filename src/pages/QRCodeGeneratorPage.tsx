@@ -53,6 +53,10 @@ export default function QRCodeGeneratorPage() {
         Lien vers l'upload : {sessionId}
       </a>
 
+      <Button onClick={() => navigate("/customisation")}>
+        Personaliser un produit
+      </Button>
+
       {imageUrl ? (
         <div className="max-w-xs w-full">
           <h2 className="text-lg font-semibold mb-2">Image reçue :</h2>
@@ -61,10 +65,6 @@ export default function QRCodeGeneratorPage() {
       ) : (
         <p className="text-gray-500">En attente d'une image...</p>
       )}
-
-      <Button variant="outline" onClick={() => navigate("/customisation")}>
-        Personaliser un produit
-      </Button>
     </div>
   );
 }

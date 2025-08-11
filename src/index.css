@@ -1,3 +1,6 @@
 @import "tailwindcss";
-@tailwind utilities;
-@custom-variant dark (&:where(.dark, .dark *));
+
+/* Additional theme variables */
+@import "./styles/theme-accent.css";
+@import "./styles/theme-background.css";
+@import "./styles/theme-gray.css";
