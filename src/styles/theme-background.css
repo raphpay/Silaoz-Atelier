@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #fff;
+}
+
+.dark,
+.dark-theme,
+:is(.dark, .dark-theme) :where(.radix-themes:not(.light, .light-theme)) {
+  @theme {
+    --color-background: #111;
+  }
+}
